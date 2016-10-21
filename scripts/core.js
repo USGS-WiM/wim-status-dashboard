@@ -27,11 +27,14 @@ $( document ).ready(function() {
 
         $.ajax({
             type: "GET",
-            url: "https://statuschecker.fgdc.gov/api/v2/liveTest?auth=" + apiKey + "&type=" + serviceType + "&url"+ serviceUrl,
-            dataType: "json",
+            url: "https://statuschecker.fgdc.gov/api/v2/liveTest?auth=" + apiKey + "&type=" + serviceType + "&url="+ serviceUrl,
+            dataType: "jsonp",
+            crossDomain: true,
             success: function (result) {
 
-                console.log(result);
+            console.log("nailed it. " + result)
+
+
 
             }
         });
@@ -41,5 +44,8 @@ $( document ).ready(function() {
 
 
 });
+
+
+
 
 
