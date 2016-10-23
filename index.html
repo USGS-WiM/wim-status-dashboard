@@ -19,6 +19,9 @@
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <link href="styles/ie10-viewport-bug-workaround.css" rel="stylesheet">
 
+    <!-- fontawesome -->
+    <link rel="stylesheet" href="node_modules/font-awesome/css/font-awesome.css">
+
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -35,7 +38,13 @@
 
 
         if(response.data[0].tests.catalogServer.success == 1 && response.data[0].tests.getCapabilities.success == 1 && response.data[0].tests.httpServer.success == 1 && response.data[0].tests.mapExport.success == 1) {
-            $("#testVal").html("Success")
+            $("#testVal").html('<i class="fa fa-check-circle fa-2x" aria-hidden="true"></i> Success');
+            $("#resultsRow").removeClass('danger');
+            $("#resultsRow").addClass('success');
+        } else {
+            $("#testVal").html("Fail")
+            $("#resultsRow").removeClass('success');
+            $("#resultsRow").addClass('danger');
         }
 
         $("#timeVal").html(response.data[0].date);
@@ -82,22 +91,24 @@
 <div class="container">
 
     <div class="jumbotron">
-       <h2>Map Services Status</h2>
+       <h2>Map Service Live Status Check</h2>
         <h4>Powered by FDGC Status Checker</h4>
 
         <label for="mapService">Select a map service to check:</label>
         <select name="mapService" id="mapService"></select>
-        <button id="btn_checkMapService" class=".btn-wim-primary">Check</button>
+        <button id="btn_checkMapService" class=".btn-wim">Check</button>
+
+        <!--<button id="btn_checkAll" class=".btn-wim-primary">Check All Production Services</button>-->
 
         <div id="serviceStatusTable">
-            <table class="table table-bordered">
+            <table id="liveTestResultsTable" class="table table-bordered">
                 <tr>
                     <th id="timeHead">Time </th>
                     <th id="testHead">Test</th>
                     <th id="responseTimeHead">Response Time</th>
                     <th id="scoreHead">Reliability Score</th>
                 </tr>
-                <tr>
+                <tr id="resultsRow">
                     <td id="timeVal"></td>
                     <td id="testVal"></td>
                     <td id="responseTimeVal"></td>

@@ -2,3 +2,15 @@ body {
     min-height: 2000px;
     padding-top: 70px;
 }
+
+#liveTestResultsTable {
+    background-color: white !important;
+}
+
+.fa-check-circle {
+    color: green;
+}
+
+/*.btn-wim-primary {*/
+    /*background-color: #0071bc !important;*/
+/*}*/
