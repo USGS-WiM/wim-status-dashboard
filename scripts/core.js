@@ -25,19 +25,20 @@ $( document ).ready(function() {
         var serviceType = 'agsmapserver';
         var apiKey = 'a09fa1813393acffca8c06f9f2782054';
 
-        $.ajax({
-            type: "GET",
-            url: "https://statuschecker.fgdc.gov/api/v2/liveTest?auth=" + apiKey + "&type=" + serviceType + "&url="+ serviceUrl,
-            dataType: "jsonp",
-            crossDomain: true,
-            success: function (result) {
+        var tag = document.createElement("script");
+        tag.src = "https://statuschecker.fgdc.gov/api/v2/liveTest?auth=" + apiKey + "&type=" + serviceType + "&url="+ serviceUrl +"&callback=displayLiveTestResults";
+        document.getElementsByTagName("head")[0].appendChild(tag);
 
-            console.log("nailed it. " + result)
-
-
-
-            }
-        });
+        // $.ajax({
+        //     type: "GET",
+        //     url: "https://statuschecker.fgdc.gov/api/v2/liveTest?auth=" + apiKey + "&type=" + serviceType + "&url="+ serviceUrl,
+        //     dataType: "jsonp",
+        //     crossDomain: true,
+        //     success: function (result) {
+        //     console.log("nailed it. " + result)
+        //     $("#timeVal").html(result.data[0].date);
+        //     }
+        // });
 
 
     });

@@ -28,6 +28,23 @@
 </head>
 <body>
 
+<script>
+    var displayLiveTestResults = function(response) {
+        console.log(response);
+
+
+
+        if(response.data[0].tests.catalogServer.success == 1 && response.data[0].tests.getCapabilities.success == 1 && response.data[0].tests.httpServer.success == 1 && response.data[0].tests.mapExport.success == 1) {
+            $("#testVal").html("Success")
+        }
+
+        $("#timeVal").html(response.data[0].date);
+        $("#responseTimeVal").html(response.data[0].summary.scoredTest.currentSpeed + "sec");
+        $("#scoreVal").html(response.data[0].summary.scoredTest.currentScore);
+
+    };
+</script>
+
 <!-- Fixed navbar -->
 <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container">
@@ -74,8 +91,20 @@
 
         <div id="serviceStatusTable">
             <table class="table table-bordered">
-                ...
+                <tr>
+                    <th id="timeHead">Time </th>
+                    <th id="testHead">Test</th>
+                    <th id="responseTimeHead">Response Time</th>
+                    <th id="scoreHead">Reliability Score</th>
+                </tr>
+                <tr>
+                    <td id="timeVal"></td>
+                    <td id="testVal"></td>
+                    <td id="responseTimeVal"></td>
+                    <td id="scoreVal"></td>
+                </tr>
             </table>
+            <div><span id="failMessage"></span></div>
         </div>
 
     </div>
