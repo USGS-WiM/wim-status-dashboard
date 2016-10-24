@@ -5,10 +5,35 @@ body {
 
 #liveTestResultsTable {
     background-color: white !important;
+    display: none;
 }
 
 .fa-check-circle {
     color: green;
+}
+
+.fa-arrow-circle-down {
+    color: red;
+}
+
+.fa-exclamation-triangle {
+    color: red;
+}
+
+.testLoading {
+    display: none;
+}
+
+#downApps {
+    display: none;
+}
+
+#allHealthyMessage{
+    display: none;
+}
+
+#problemMessage{
+    display: none;
 }
 
 /*.btn-wim-primary {*/

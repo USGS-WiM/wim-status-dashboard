@@ -14,6 +14,8 @@
     <script src="node_modules/jquery/dist/jquery.min.js"></script>
     <!--<script src="node_modules/jquery-ui/build/release.js"></script>-->
     <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- moment JS -->
+    <script src="node_modules/moment/moment.js"></script>
     <script src="scripts/core.js"></script>
 
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
@@ -32,24 +34,73 @@
 <body>
 
 <script>
+
+//    $.ajax({
+//        type: "GET",
+//        url: "https://api.uptimerobot.com/getAccountDetails?apiKey=u376953-d43c4b57764cb9b6b3da0618&format=json",
+//        dataType: "json",
+//        success: function (response) {
+//            console.log(response);
+//        }
+//    });
+
+    function jsonUptimeRobotApi(data) {
+        var allHealthy = true;
+        var downAppsArray = [];
+        for (var i = 0; i < data.monitors.monitor.length; i++) {
+            if( data.monitors.monitor[i].status == 9 ){
+                allHealthy = false;
+                downAppsArray.push(data.monitors.monitor[i])
+            }
+        }
+        if (allHealthy == false) {
+            $('#numAppsDown').html(downAppsArray.length);
+            $('#problemMessage').show();
+            $('#downApps').show();
+            for (var i = 0; i < downAppsArray.length; i++) {
+                $('#downAppsTable').append('<tr><td class="nameVal">' + downAppsArray[i].friendlyname +'</td><td class="testVal"><i class="fa fa-arrow-circle-down fa-2x" aria-hidden="true"></i> Fail</td><td class="urlVal"><a href="' + downAppsArray[i].url +'">' + downAppsArray[i].url +'</a></td></tr>')
+            }
+        } else if (allHealthy == true) {
+            $('#allHealthyMessage').show();
+            $('#downApps').hide();
+        }
+
+//        console.log(data);
+//        if (data.account.downMonitors) {
+//
+//            $("#numAppsUp").html(data.account.upMonitors);
+//            $("#numAppsDown").html(data.account.downMonitors);
+//        }
+
+    }
+
+    var lastServiceSelected = "";
     var displayLiveTestResults = function(response) {
         console.log(response);
 
-
+        $('#liveTestResultsTable').show();
+        $(".testLoading").hide();
 
         if(response.data[0].tests.catalogServer.success == 1 && response.data[0].tests.getCapabilities.success == 1 && response.data[0].tests.httpServer.success == 1 && response.data[0].tests.mapExport.success == 1) {
-            $("#testVal").html('<i class="fa fa-check-circle fa-2x" aria-hidden="true"></i> Success');
-            $("#resultsRow").removeClass('danger');
-            $("#resultsRow").addClass('success');
-        } else {
-            $("#testVal").html("Fail")
-            $("#resultsRow").removeClass('success');
-            $("#resultsRow").addClass('danger');
-        }
+//            $("#testVal").html('<i class="fa fa-check-circle fa-2x" aria-hidden="true"></i> Success');
+//            $("#resultsRow").removeClass('danger');
+//            $("#resultsRow").addClass('success');
 
-        $("#timeVal").html(response.data[0].date);
-        $("#responseTimeVal").html(response.data[0].summary.scoredTest.currentSpeed + "sec");
-        $("#scoreVal").html(response.data[0].summary.scoredTest.currentScore);
+            $("#liveTestResultsTable").append('<tr class="resultsRow success"><td class="idVal">' + lastServiceSelected + '</td><td class="testVal"><i class="fa fa-check-circle fa-2x" aria-hidden="true"></i> Success</td><td class="timeVal">' + (moment(response.data[0].date).format("MMM D YYYY, h:mm:ss a")) + '</td><td class="responseTimeVal">' + response.data[0].summary.scoredTest.currentSpeed + ' sec</td><td class="scoreVal">' + response.data[0].summary.scoredTest.currentScore + '</td></tr>')
+
+
+        } else {
+//            $("#testVal").html("Fail");
+//            $("#resultsRow").removeClass('success');
+//            $("#resultsRow").addClass('danger');
+
+            $("#liveTestResultsTable").append('<tr class="resultsRow danger"><td class="idVal">' + lastServiceSelected + '</td><td class="testVal"><i class="fa fa-arrow-circle-down fa-2x" aria-hidden="true"></i> Fail</td><td class="timeVal">' + (moment(response.data[0].date).format("MMM D YYYY, h:mm:ss a")) + '</td><td class="responseTimeVal">' + response.data[0].summary.scoredTest.currentSpeed + ' sec</td><td class="scoreVal">' + response.data[0].summary.scoredTest.currentScore + '</td></tr>')
+
+        }
+//
+//        $("#timeVal").html(moment(response.data[0].date).format("MMM Do YYYY, h:mm:ss a"));
+//        $("#responseTimeVal").html(response.data[0].summary.scoredTest.currentSpeed + "sec");
+//        $("#scoreVal").html(response.data[0].summary.scoredTest.currentScore);
 
     };
 </script>
@@ -67,60 +118,90 @@
             <a class="navbar-brand" href="#">WiM Status Dashboard</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
-            <!--<ul class="nav navbar-nav">-->
-                <!--<li class="active"><a href="#">Map Services</a></li>-->
-                <!--<li><a href="#about">Web Services</a></li>-->
-                <!--<li><a href="#contact">Applications</a></li>-->
-                <!--<li class="dropdown">-->
-                    <!--<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>-->
-                    <!--<ul class="dropdown-menu">-->
-                        <!--<li><a href="#">Action</a></li>-->
-                        <!--<li><a href="#">Another action</a></li>-->
-                        <!--<li><a href="#">Something else here</a></li>-->
-                        <!--<li role="separator" class="divider"></li>-->
-                        <!--<li class="dropdown-header">Nav header</li>-->
-                        <!--<li><a href="#">Separated link</a></li>-->
-                        <!--<li><a href="#">One more separated link</a></li>-->
-                    <!--</ul>-->
-                <!--</li>-->
-            <!--</ul>-->
+            <ul class="nav navbar-nav">
+                <!--<li class="active"><a href="#mapServices">Map Services</a></li>-->
+                <!--&lt;!&ndash;<li><a href="#webServices">Web Services</a></li>&ndash;&gt;-->
+                <!--<li><a href="#apps">Applications</a></li>-->
+            </ul>
         </div><!--/.nav-collapse -->
     </div>
 </nav>
 
 <div class="container">
 
-    <div class="jumbotron">
-       <h2>Map Service Live Status Check</h2>
-        <h4>Powered by FDGC Status Checker</h4>
 
-        <label for="mapService">Select a map service to check:</label>
-        <select name="mapService" id="mapService"></select>
-        <button id="btn_checkMapService" class=".btn-wim">Check</button>
 
-        <!--<button id="btn_checkAll" class=".btn-wim-primary">Check All Production Services</button>-->
+    <div class="container">
+        <!--<div id="content">-->
+            <!--<ul id="tabs" class="nav nav-pills" data-tabs="tabs">-->
+                <!--<li class="active"><a href="#mapServices" data-toggle="tab">Map Services</a></li>-->
+                <!--<li><a href="#apps" data-toggle="tab">Applications</a></li>-->
+                <!--&lt;!&ndash;<li><a href="#webServices" data-toggle="tab">Web Services</a></li>&ndash;&gt;-->
+            <!--</ul>-->
+            <!--<div id="my-tab-content" class="tab-content">-->
+                <!--<div class="tab-pane active" id="mapServices">-->
+                    <div class="container">
+                        <!--<h2>Application Live Status Check</h2>-->
+                        <!--<h4>Powered by Uptime Robot</h4>-->
+                        <span id="allHealthyMessage"><h2><i class="fa fa-check-circle fa-2x" aria-hidden="true"></i> All WiM applications are up and running.</h2></span>
+                        <span id="problemMessage"><h2><i class="fa fa-exclamation-triangle fa-2x" aria-hidden="true"></i> <span id="numAppsDown"></span> WiM applications are down.</h2></span>
 
-        <div id="serviceStatusTable">
-            <table id="liveTestResultsTable" class="table table-bordered">
-                <tr>
-                    <th id="timeHead">Time </th>
-                    <th id="testHead">Test</th>
-                    <th id="responseTimeHead">Response Time</th>
-                    <th id="scoreHead">Reliability Score</th>
-                </tr>
-                <tr id="resultsRow">
-                    <td id="timeVal"></td>
-                    <td id="testVal"></td>
-                    <td id="responseTimeVal"></td>
-                    <td id="scoreVal"></td>
-                </tr>
-            </table>
-            <div><span id="failMessage"></span></div>
-        </div>
+                        <div id="downApps">
+                            <label for="downAppsTable">The following apps are down:</label>
+                            <table id="downAppsTable" class="table table-bordered">
+                                <tr>
+                                    <th id="nameHead">Application</th>
+                                    <th id="testHead_app">HTTP Test</th>
+                                    <th id="urlHead">URL</th>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="jumbotron">
+                        <h2>Map Service Live Status Check</h2>
+                        <h4>Powered by FDGC Status Checker</h4>
 
+                        <label for="mapService">Select a map service to check:</label>
+                        <select name="mapService" id="mapService"></select>
+                        <button id="btn_checkMapService" class=".btn-wim">Check</button><i style="display: none;" class="fa fa-spinner fa-pulse fa-3x fa-fw testLoading"></i>
+
+                        <!--<button id="btn_checkAll" class=".btn-wim-primary">Check All Production Services</button>-->
+
+                        <div id="serviceStatusTable">
+                            <table id="liveTestResultsTable" class="table table-bordered">
+                                <tr>
+                                    <th id="idHead">Service</th>
+                                    <th id="testHead">Test</th>
+                                    <th id="timeHead">Test Time </th>
+                                    <th id="responseTimeHead">Response Time</th>
+                                    <th id="scoreHead">Reliability Score</th>
+                                </tr>
+                                <!--<tr id="resultsRow">-->
+                                <!--<td id="timeVal"></td>-->
+                                <!--<td id="testVal"></td>-->
+                                <!--<td id="responseTimeVal"></td>-->
+                                <!--<td id="scoreVal"></td>-->
+                                <!--</tr>-->
+                            </table>
+                        </div>
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<div class="tab-pane" id="apps">-->
+                    <!--<div class="jumbotron">-->
+                        <!--<h2>Application Live Status Check</h2>-->
+                        <!--<h4>Powered by Uptime Robot</h4>-->
+                        <!--<span><i class="fa fa-check-circle fa-2x" aria-hidden="true"></i> All WiM Applications are up and running. <br></span>-->
+                        <!--<span>There are <span id="numAppsUp"></span> monitored apps up and <span id="numAppsDown"></span> down.</span>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<div class="tab-pane" id="yellow">-->
+                    <!--<h1>Yellow</h1>-->
+                    <!--<p>yellow yellow yellow yellow yellow</p>-->
+                <!--</div>-->
+            </div>
+        <!--</div>-->
     </div>
-
-
 
 </div> <!-- /container -->
 
