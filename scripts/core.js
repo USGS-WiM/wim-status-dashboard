@@ -47,11 +47,7 @@ $( document ).ready(function() {
         //     }
         // });
 
-
     });
-
-
-
 
 });
 

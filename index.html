@@ -61,6 +61,7 @@
                 $('#downAppsTable').append('<tr><td class="nameVal">' + downAppsArray[i].friendlyname +'</td><td class="testVal"><i class="fa fa-arrow-circle-down fa-2x" aria-hidden="true"></i> Fail</td><td class="urlVal"><a href="' + downAppsArray[i].url +'">' + downAppsArray[i].url +'</a></td></tr>')
             }
         } else if (allHealthy == true) {
+            $('#numAppsMonitored').html(" " + data.total);
             $('#allHealthyMessage').show();
             $('#downApps').hide();
         }
@@ -143,7 +144,7 @@
                     <div class="container">
                         <!--<h2>Application Live Status Check</h2>-->
                         <!--<h4>Powered by Uptime Robot</h4>-->
-                        <span id="allHealthyMessage"><h2><i class="fa fa-check-circle fa-2x" aria-hidden="true"></i> All WiM applications are up and running.</h2></span>
+                        <span id="allHealthyMessage"><h2><i class="fa fa-check-circle fa-2x" aria-hidden="true"></i> All WiM applications are up and running.</h2><br> This only includes<span id="numAppsMonitored"></span> WiM apps currently monitored through Uptime Robot. Refresh page to update status.</span>
                         <span id="problemMessage"><h2><i class="fa fa-exclamation-triangle fa-2x" aria-hidden="true"></i> <span id="numAppsDown"></span> WiM applications are down.</h2></span>
 
                         <div id="downApps">
