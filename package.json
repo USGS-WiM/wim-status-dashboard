@@ -1,0 +1,14 @@
+{
+  "name": "wim-status-dashboard",
+  "version": "0.0.1",
+  "repository": "https://github.com/USGS-WiM/wim-status-dashboard.git",
+  "license": "CC-BY-NC-4.0",
+  "dependencies": {
+    "bootstrap": "^3.3.7",
+    "font-awesome": "^4.6.3",
+    "jquery": "^3.1.1",
+    "jquery-ui": "^1.12.1",
+    "moment": "^2.15.2",
+    "wim-styles": "USGS-WiM/wim-styles"
+  }
+}

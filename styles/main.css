@@ -1,0 +1,41 @@
+body {
+    min-height: 2000px;
+    padding-top: 70px;
+}
+
+#liveTestResultsTable {
+    background-color: white !important;
+    display: none;
+}
+
+.fa-check-circle {
+    color: green;
+}
+
+.fa-arrow-circle-down {
+    color: red;
+}
+
+.fa-exclamation-triangle {
+    color: red;
+}
+
+.testLoading {
+    display: none;
+}
+
+#downApps {
+    display: none;
+}
+
+#allHealthyMessage{
+    display: none;
+}
+
+#problemMessage{
+    display: none;
+}
+
+/*.btn-wim-primary {*/
+    /*background-color: #0071bc !important;*/
+/*}*/
