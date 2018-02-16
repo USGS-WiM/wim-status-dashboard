@@ -1,0 +1,47 @@
+[
+  {
+    "name": "wim-status-dashboard",
+    "organization": "U.S. Geological Survey",
+    "description": "Status dashboard for WiM services and apps",
+    "version": "v0.0.0",
+    "status": "Production"
+
+    "permissions": {
+      "usageType": "openSource",
+      "licenses": [
+        {
+          "name": "Public Domain",
+          "URL": "https://github.com/usgs/wim-status-dashboard/blob/master/LICENSE.md"
+        }
+      ]
+    },
+
+    "homepageURL": "https://wim.usgs.gov/status/",
+    "downloadURL": "https://github.com/USGS-WiM/wim-status-dashboardimpo/archive/master.zip",
+    "disclaimerURL": "https://github.com/USGS-WiM/wim-status-dashboard/blob/master/DISCLAIMER.md",
+    "repositoryUrl": "https://github.com/USGS-WiM/wim-status-dashboard",
+    "vcs": "git",
+
+    "laborHours": null,
+
+    "tags": [
+      "wim",
+      "status",
+      "dashboard",
+      "services"
+    ],
+
+    "languages": [
+      "javascript"
+    ],
+
+    "contact": {
+      "name": "Blake Draper",
+      "email": "bdraper@usgs.gov"
+    },
+
+    "date": {
+      "metadataLastUpdated": "2018-02-16"
+    }
+  }
+]
