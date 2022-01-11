@@ -4,7 +4,7 @@
   "repository": "https://github.com/USGS-WiM/wim-status-dashboard.git",
   "license": "CC-BY-NC-4.0",
   "dependencies": {
-    "bootstrap": "^3.3.7",
+    "bootstrap": "^5.1.3",
     "font-awesome": "^4.6.3",
     "jquery": "^3.6.0",
     "jquery-ui": "^1.12.1",
